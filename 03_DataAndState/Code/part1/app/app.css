@@ -1,0 +1,23 @@
+body {
+  font-family:'Segoe UI', Helvetica, sans-serif;
+  background-color:goldenrod;
+}
+.container {
+  display: flex;
+}
+.column {
+  flex: 1;
+  background-color:white;
+  margin:10px;
+  padding:10px 15px;
+}
+
+.column > div > h1 {
+  font-family:'Segoe UI Light';
+  margin-top:0px;
+}
+
+/* INBOX */
+#inbox > table {
+  text-align:left;  
+}

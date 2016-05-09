@@ -13,23 +13,17 @@ var App = React.createClass({
   getInitialState: function() {
     return { 
       "humans": {},
-      "stores": {},
-      "selectedConversation": []
+      "stores": {}
     };
   },
   loadSampleData: function(){
     this.setState(samples);
-    this.setState({selectedConversation: samples.humans["Rami Sayar"].conversations});
   },
-  componentDidMount: function() {
-    if(this.props.params.human !== undefined && this.props.params.humans !== null) {
-      this.setSelectedConversation(decodeURIComponent(this.props.params.human));
+  // Handle when user navigates to a conversation directly without first loading the index...
+  componentWillMount: function(){
+    if('human' in this.props.params){
+      this.loadSampleData();
     }
-  },
-  setSelectedConversation: function(human_index){
-    this.setState({
-      selectedConversation: this.state.humans[human_index].conversations
-    })
   },
   render: function() {
     return (
@@ -41,7 +35,7 @@ var App = React.createClass({
             <Inbox humans={this.state.humans} />
           </div>
           <div className="column">
-            <Conversation conversation={this.state.selectedConversation} />
+            {this.props.children || "Select a Conversation from the Inbox"}
           </div>
           <div className="column">
             <StoreList stores={this.state.stores} />
@@ -88,7 +82,7 @@ var ConversationSummary = React.createClass({
   render: function(){
     return (
       <tr>
-        <td><Link to={'' + encodeURIComponent(this.props.index)}>{this.messageSummary(this.props.details.conversations)}</Link></td>
+        <td><Link to={'/conversation/' + encodeURIComponent(this.props.index)}>{this.messageSummary(this.props.details.conversations)}</Link></td>
         <td>{this.props.index}</td>
         <td>{this.props.details.orders.sort(this.sortByDate)[0].status}</td>
       </tr>
@@ -97,6 +91,17 @@ var ConversationSummary = React.createClass({
 });
 
 var Conversation = React.createClass({
+  loadSampleData: function(human){
+    this.setState({conversation: samples.humans[human].conversations});
+  },
+  // Handle when User navigates from / to /conversation/:human
+  componentWillMount: function() {
+    this.loadSampleData(this.props.params.human);
+  },
+  // Handle when User navigates between conversations
+  componentWillReceiveProps: function(nextProps) {
+    this.loadSampleData(nextProps.params.human);
+  },
   renderMessage: function(val){
     return <Message who={val.who} text={val.text} key={val.time.getTime()} />;
   },
@@ -104,9 +109,9 @@ var Conversation = React.createClass({
     return (
       <div id="conversation">
         <h1>Conversation</h1>
-        <h3>Select a conversation from the inbox</h3>
+        <h3>{this.props.params.human}</h3>
         <div id="messages">
-          {this.props.conversation.map(this.renderMessage)}
+         {this.state.conversation.map(this.renderMessage)}
         </div>
       </div>
     )
@@ -156,7 +161,7 @@ var Store = React.createClass({
 ReactDOM.render((
   <Router history={browserHistory}>
     <Route path="/" component={App}>
-      <Route path=":human" component={App}></Route>
+      <Route path="/conversation/:human" component={Conversation}></Route>
     </Route>
   </Router>
 ), document.querySelector('#main'))
