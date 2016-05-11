@@ -145,4 +145,4 @@ var Store = React.createClass({
   }
 });
 
-ReactDOM.render(<App/>, document.querySelector('#main'));
+ReactDOM.render(<App/>, document.getElementById('main'));

@@ -171,4 +171,4 @@ ReactDOM.render((
       <Route path="/conversation/:human" component={Conversation}></Route>
     </Route>
   </Router>
-), document.querySelector('#main'))
+), document.getElementById('main'))
