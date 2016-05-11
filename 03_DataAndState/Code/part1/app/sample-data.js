@@ -27,7 +27,7 @@ module.exports = {
         {
           "time": new Date(2016, 4, 5, 15, 11, 45, 0),
           "pizzas": [{
-            "toppings": "Meat-Lovers",
+            "toppings": ["Meat-Lovers"],
             "size": "S"
           }],
           "price": 15,
@@ -63,12 +63,12 @@ module.exports = {
         {
           "time": new Date(2016, 4, 4, 20, 31, 0, 0),
           "pizzas": [{
-            "toppings": "cheese",
+            "toppings": ["cheese"],
             "size": "XL"
           }],
           "price": 15,
           "address": "123 Sesame Street, Montreal, Canada",
-          "status": "Confirmed" // status := Open -> Confirmed -> In The Oven -> Delivered
+          "status": "Delivered" // status := Open -> Confirmed -> In The Oven -> Delivered
         }
       ]
     }
