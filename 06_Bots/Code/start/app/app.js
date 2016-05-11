@@ -17,7 +17,7 @@ var App = React.createClass({
     return { 
       "humans": {},
       "stores": {}
-     };
+    };
   },
   loadSampleData: function(){
     this.setState(samples);
