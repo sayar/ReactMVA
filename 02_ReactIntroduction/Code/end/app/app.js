@@ -8,7 +8,7 @@ var App = React.createClass({
         <div id="header"></div>
         <div className="container">
           <div className="column">
-            <Inbox />
+            <InboxPane />
           </div>
           <div className="column"></div>
           <div className="column"></div>
@@ -18,7 +18,7 @@ var App = React.createClass({
   }
 });
 
-var Inbox = React.createClass({
+var InboxPane = React.createClass({
   render : function() {
     return (
       <div id="inbox">
@@ -32,7 +32,7 @@ var Inbox = React.createClass({
             </tr>
           </thead>
           <tbody>
-            <ConversationSummary />
+            <InboxItem />
           </tbody>
         </table>
       </div>
@@ -40,7 +40,7 @@ var Inbox = React.createClass({
   }
 });
 
-var ConversationSummary = React.createClass({
+var InboxItem = React.createClass({
   render: function(){
     return (
       <tr>

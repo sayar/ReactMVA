@@ -32,7 +32,7 @@ var App = React.createClass({
         <button onClick={this.loadSampleData}>Load Sample Data</button>
         <div className="container">
           <div className="column">
-            <Inbox humans={this.state.humans} />
+            <InboxPane humans={this.state.humans} />
           </div>
           <div className="column">
             {this.props.children || "Select a Conversation from the Inbox"}
@@ -46,9 +46,9 @@ var App = React.createClass({
   }
 });
 
-var Inbox = React.createClass({
+var InboxPane = React.createClass({
   renderConvoSum: function(human){
-    return <ConversationSummary key={human} index={human} details={this.props.humans[human]} />;
+    return <InboxItem key={human} index={human} details={this.props.humans[human]} />;
   },
   render : function() {
     return (
@@ -71,7 +71,7 @@ var Inbox = React.createClass({
   }
 });
 
-var ConversationSummary = React.createClass({
+var InboxItem = React.createClass({
   sortByDate: function(a, b) {
     return a.time>b.time ? -1 : a.time<b.time ? 1 : 0;
   },
