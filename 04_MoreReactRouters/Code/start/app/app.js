@@ -30,7 +30,7 @@ var App = React.createClass({
             <InboxPane humans={this.state.humans} setSelectedConversation={this.setSelectedConversation} />
           </div>
           <div className="column">
-            <Conversation conversation={this.state.selectedConversation} />
+            <ConversationPane conversation={this.state.selectedConversation} />
           </div>
           <div className="column">
             <StorePane stores={this.state.stores} />
@@ -88,7 +88,7 @@ var InboxItem = React.createClass({
   }
 });
 
-var Conversation = React.createClass({
+var ConversationPane = React.createClass({
   renderMessage: function(val){
     return <Message who={val.who} text={val.text} key={val.time.getTime()} />;
   },

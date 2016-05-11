@@ -1,6 +1,7 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 var ReactRouter = require('react-router');
+var PureRenderMixin = require('react-addons-pure-render-mixin');
 
 var browserHistory = ReactRouter.browserHistory;
 var Route = ReactRouter.Route;
@@ -9,12 +10,14 @@ var Link = ReactRouter.Link;
 
 var samples = require('./sample-data');
 
+require("./app.css");
+
 var App = React.createClass({
   getInitialState: function() {
     return { 
       "humans": {},
       "stores": {}
-    };
+     };
   },
   loadSampleData: function(){
     this.setState(samples);
@@ -31,15 +34,9 @@ var App = React.createClass({
         <div id="header"></div>
         <button onClick={this.loadSampleData}>Load Sample Data</button>
         <div className="container">
-          <div className="column">
-            <InboxPane humans={this.state.humans} />
-          </div>
-          <div className="column">
-            {this.props.children || "Select a Conversation from the Inbox"}
-          </div>
-          <div className="column">
-            <StorePane stores={this.state.stores} />
-          </div>
+          <InboxPane humans={this.state.humans} />
+          {this.props.children || <div id="conversation-pane" className="column"><h4>Select a Conversation from the Inbox</h4></div>}
+          <StorePane stores={this.state.stores} />
         </div>
       </div>
     )
@@ -52,26 +49,17 @@ var InboxPane = React.createClass({
   },
   render : function() {
     return (
-      <div id="inbox">
+      <div id="inbox-pane" className="column">
         <h1>Inbox</h1>
-        <table>
-          <thead>
-            <tr>
-              <th>Chat Received</th>
-              <th>Name</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {Object.keys(this.props.humans).map(this.renderConvoSum)}
-          </tbody>
-        </table>
+        {Object.keys(this.props.humans).map(this.renderConvoSum)}
       </div>
     )
   }
 });
 
 var InboxItem = React.createClass({
+  mixins: [PureRenderMixin],
+
   sortByDate: function(a, b) {
     return a.time>b.time ? -1 : a.time<b.time ? 1 : 0;
   },
@@ -81,11 +69,9 @@ var InboxItem = React.createClass({
   },
   render: function(){
     return (
-      <tr>
-        <td><Link to={'/conversation/' + encodeURIComponent(this.props.index)}>{this.messageSummary(this.props.details.conversations)}</Link></td>
-        <td>{this.props.index}</td>
-        <td>{this.props.details.orders.sort(this.sortByDate)[0].status}</td>
-      </tr>
+      <div className="inbox-item">
+        <Link to={'/conversation/' + encodeURIComponent(this.props.index)}>Conversation with {this.props.index}</Link> ({this.props.details.orders.sort(this.sortByDate)[0].status})
+      </div>
     )
   }
 });
@@ -102,16 +88,21 @@ var ConversationPane = React.createClass({
   componentWillReceiveProps: function(nextProps) {
     this.loadSampleData(nextProps.params.human);
   },
+
+  sortByDateDesc: function(a, b) {
+    return a.time < b.time ? -1 : a.time > b.time ? 1 : 0;
+  },
+
   renderMessage: function(val){
     return <Message who={val.who} text={val.text} key={val.time.getTime()} />;
   },
   render: function() {
     return (
-      <div id="conversation">
+      <div id="conversation-pane" className="column">
         <h1>Conversation</h1>
         <h3>{this.props.params.human}</h3>
         <div id="messages">
-         {this.state.conversation.map(this.renderMessage)}
+         {this.state.conversation.sort(this.sortByDateDesc).map(this.renderMessage)}
         </div>
       </div>
     )
@@ -119,9 +110,11 @@ var ConversationPane = React.createClass({
 });
 
 var Message = React.createClass({
+  mixins: [PureRenderMixin],
+
   render: function() {
     return (
-      <p>{this.props.who} said: "{this.props.text}"</p>
+      <p className={this.props.who}><img src={require('./assets/' + this.props.who + '.png')} /> "{this.props.text}"</p>
     )
   }
 });
@@ -132,7 +125,7 @@ var StorePane = React.createClass({
   },
   render: function() {
     return (
-      <div id="stores">
+      <div id="stores-pane" className="column">
         <h1>Stores & Ovens</h1>
         <ul>
           {Object.keys(this.props.stores).map(this.renderStore)}
@@ -143,17 +136,21 @@ var StorePane = React.createClass({
 });
 
 var Store = React.createClass({
+  mixins: [PureRenderMixin],
+
   getCount: function(status){
     return this.props.details.orders.filter(function(n){ return n.status === status}).length;
   },
   render: function(){
     return (
-      <li>
-        <p>{this.props.index}</p>
-        <p>Orders Confirmed: {this.getCount("Confirmed")}</p>
-        <p>Orders In The Oven: {this.getCount("In The Oven")}</p>
-        <p>Orders Delivered: {this.getCount("Delivered")}</p>
-      </li>
+      <div className="store">
+        <div className="name">{this.props.index}</div>
+        <div className="orders">
+          <div><img src={require('./assets/order-confirmed.png')}/> {this.getCount("Confirmed")}</div>
+          <div><img src={require('./assets/order-oven.png')}/> {this.getCount("In The Oven")}</div>
+          <div><img src={require('./assets/order-delivered.png')}/> {this.getCount("Delivered")}</div>
+        </div>
+      </div>
     )
   }
 });
