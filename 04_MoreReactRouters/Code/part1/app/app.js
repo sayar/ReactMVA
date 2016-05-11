@@ -38,7 +38,7 @@ var App = React.createClass({
             {this.props.children || "Select a Conversation from the Inbox"}
           </div>
           <div className="column">
-            <StoreList stores={this.state.stores} />
+            <StorePane stores={this.state.stores} />
           </div>
         </div>
       </div>
@@ -126,7 +126,7 @@ var Message = React.createClass({
   }
 });
 
-var StoreList = React.createClass({
+var StorePane = React.createClass({
   renderStore: function(store){
     return <Store key={store} index={store} details={this.props.stores[store]} />;
   },

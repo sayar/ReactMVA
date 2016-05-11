@@ -39,7 +39,7 @@ var App = React.createClass({
             {this.props.children || "Select a Conversation from the Inbox"}
           </div>
           <div className="column">
-            <StoreList stores={this.state.stores} />
+            <StorePane stores={this.state.stores} />
           </div>
         </div>
       </div>
@@ -93,7 +93,7 @@ var InboxItem = React.createClass({
   }
 });
 
-var Conversation = React.createClass({
+var ConversationPane = React.createClass({
   loadSampleData: function(human){
     this.setState({conversation: samples.humans[human].conversations});
   },
@@ -131,7 +131,7 @@ var Message = React.createClass({
   }
 });
 
-var StoreList = React.createClass({
+var StorePane = React.createClass({
   renderStore: function(store){
     return <Store key={store} index={store} details={this.props.stores[store]} />;
   },
@@ -168,7 +168,7 @@ var Store = React.createClass({
 ReactDOM.render((
   <Router history={browserHistory}>
     <Route path="/" component={App}>
-      <Route path="/conversation/:human" component={Conversation}></Route>
+      <Route path="/conversation/:human" component={ConversationPane}></Route>
     </Route>
   </Router>
 ), document.getElementById('main'))
