@@ -47,7 +47,7 @@ var InboxPane = React.createClass({
   },
   render : function() {
     return (
-      <div id="inbox">
+      <div id="inbox-pane">
         <h1>Inbox</h1>
         <table>
           <thead>
@@ -94,7 +94,7 @@ var ConversationPane = React.createClass({
   },
   render: function() {
     return (
-      <div id="conversation">
+      <div id="conversation-pane">
         <h1>Conversation</h1>
         <h3>Select a conversation from the inbox</h3>
         <div id="messages">
@@ -119,7 +119,7 @@ var StorePane = React.createClass({
   },
   render: function() {
     return (
-      <div id="stores">
+      <div id="stores-pane">
         <h1>Stores & Ovens</h1>
         <ul>
           {Object.keys(this.props.stores).map(this.renderStore)}

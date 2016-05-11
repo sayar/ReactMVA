@@ -36,7 +36,7 @@ var InboxPane = React.createClass({
   },
   render : function() {
     return (
-      <div id="inbox">
+      <div id="inbox-pane">
         <h1>Inbox</h1>
         <table>
           <thead>
