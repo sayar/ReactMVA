@@ -24,12 +24,16 @@ var Inbox = React.createClass({
       <div id="inbox">
         <h1>Inbox</h1>
         <table>
-          <tr>
-            <th>Chat Received</th>
-            <th>Name</th>
-            <th>Status</th>
-          </tr>
-          <ConversationSummary />
+          <thead>
+            <tr>
+              <th>Chat Received</th>
+              <th>Name</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <ConversationSummary />
+          </tbody>
         </table>
       </div>
     )
