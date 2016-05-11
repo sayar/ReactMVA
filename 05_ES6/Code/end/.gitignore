@@ -34,6 +34,3 @@ node_modules
 
 # Typings directory
 typings
-
-# Distribution directory
-dist
