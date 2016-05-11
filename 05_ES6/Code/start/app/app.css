@@ -1,23 +1,96 @@
+/*
+  app uses color theme https://color.adobe.com/Pizza-Chain-Bot-Manager-(React-MVA)-color-theme-8042644/ 
+    blue #6aa0a6
+    green #9aa641
+    beige #f2dfa7
+    brown #c4925d  
+    gray #666c60
+*/
+
 body {
   font-family:'Segoe UI', Helvetica, sans-serif;
-  background-color:goldenrod;
+  background-color:#666c60;
 }
 .container {
   display: flex;
 }
 .column {
   flex: 1;
-  background-color:white;
   margin:10px;
   padding:10px 15px;
 }
 
-.column > div > h1 {
+.column > h1 {
   font-family:'Segoe UI Light';
   margin-top:0px;
 }
 
-/* INBOX */
-#inbox > table {
-  text-align:left;  
+/* INBOX PANE */
+#inbox-pane {
+  background-color:#6aa0a6;
+}
+
+#inbox-pane > div {
+  background-color: rgba(255,255,255,0.5);
+  list-style: none;
+  padding:10px 20px;
+  margin:5px;
+}
+
+
+/* CONVERSATION PANE */
+#conversation-pane {
+  background-color:#9aa641;
+}
+
+#conversation-pane #messages p {
+  padding:5px;
+  vertical-align: middle;
+}
+
+#conversation-pane #messages p.bot {
+  margin-right:50px;
+  background-color:rgba(255,255,255,0.5);  
+}
+
+#conversation-pane #messages p.human {
+  margin-left:50px;
+  background-color:rgba(255,255,255,0.2);  
+}
+
+/* STORES PANE */
+#stores-pane {
+  background-color:#c4925d;
+}
+
+#stores-pane > ul {
+  padding-left:0px;
+  list-style: none;
+}
+
+#stores-pane .store {
+  background-color:#f2dfa7;
+  margin-bottom: 10px;
+  box-shadow: 2px 2px 10px rgba(0,0,0,0.6);
+  display:flex;
+}
+
+
+.store > .name {
+  font-weight:bold;
+  flex:1;
+  padding:6px;
+}
+
+#stores-pane .store .orders {
+  display:flex;
+  font-weight:bold;
+  font-size:20pt;
+  vertical-align: middle;
+}
+
+#stores-pane .store .orders > div {
+  padding-right:8px;
+  display:flex;
+  align-items: center;
 }
