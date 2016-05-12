@@ -32,13 +32,13 @@ var App = React.createClass({
         <button onClick={this.loadSampleData}>Load Sample Data</button>
         <div className="container">
           <div className="column">
-            <Inbox humans={this.state.humans} />
+            <InboxPane humans={this.state.humans} />
           </div>
           <div className="column">
             {this.props.children || "Select a Conversation from the Inbox"}
           </div>
           <div className="column">
-            <StoreList stores={this.state.stores} />
+            <StorePane stores={this.state.stores} />
           </div>
         </div>
       </div>
@@ -46,13 +46,13 @@ var App = React.createClass({
   }
 });
 
-var Inbox = React.createClass({
+var InboxPane = React.createClass({
   renderConvoSum: function(human){
-    return <ConversationSummary key={human} index={human} details={this.props.humans[human]} />;
+    return <InboxItem key={human} index={human} details={this.props.humans[human]} />;
   },
   render : function() {
     return (
-      <div id="inbox">
+      <div id="inbox-pane">
         <h1>Inbox</h1>
         <table>
           <thead>
@@ -71,7 +71,7 @@ var Inbox = React.createClass({
   }
 });
 
-var ConversationSummary = React.createClass({
+var InboxItem = React.createClass({
   sortByDate: function(a, b) {
     return a.time>b.time ? -1 : a.time<b.time ? 1 : 0;
   },
@@ -90,7 +90,7 @@ var ConversationSummary = React.createClass({
   }
 });
 
-var Conversation = React.createClass({
+var ConversationPane = React.createClass({
   loadSampleData: function(human){
     this.setState({conversation: samples.humans[human].conversations});
   },
@@ -107,7 +107,7 @@ var Conversation = React.createClass({
   },
   render: function() {
     return (
-      <div id="conversation">
+      <div id="conversation-pane">
         <h1>Conversation</h1>
         <h3>{this.props.params.human}</h3>
         <div id="messages">
@@ -126,13 +126,13 @@ var Message = React.createClass({
   }
 });
 
-var StoreList = React.createClass({
+var StorePane = React.createClass({
   renderStore: function(store){
     return <Store key={store} index={store} details={this.props.stores[store]} />;
   },
   render: function() {
     return (
-      <div id="stores">
+      <div id="stores-pane">
         <h1>Stores & Ovens</h1>
         <ul>
           {Object.keys(this.props.stores).map(this.renderStore)}
@@ -161,7 +161,7 @@ var Store = React.createClass({
 ReactDOM.render((
   <Router history={browserHistory}>
     <Route path="/" component={App}>
-      <Route path="/conversation/:human" component={Conversation}></Route>
+      <Route path="/conversation/:human" component={ConversationPane}></Route>
     </Route>
   </Router>
-), document.querySelector('#main'))
+), document.getElementById('main'))

@@ -8,7 +8,7 @@ var App = React.createClass({
         <div id="header"></div>
         <div className="container">
           <div className="column">
-            <Inbox />
+            <InboxPane />
           </div>
           <div className="column"></div>
           <div className="column"></div>
@@ -18,25 +18,29 @@ var App = React.createClass({
   }
 });
 
-var Inbox = React.createClass({
+var InboxPane = React.createClass({
   render : function() {
     return (
-      <div id="inbox">
+      <div id="inbox-pane">
         <h1>Inbox</h1>
         <table>
-          <tr>
-            <th>Chat Received</th>
-            <th>Name</th>
-            <th>Status</th>
-          </tr>
-          <ConversationSummary />
+          <thead>
+            <tr>
+              <th>Chat Received</th>
+              <th>Name</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <InboxItem />
+          </tbody>
         </table>
       </div>
     )
   }
 });
 
-var ConversationSummary = React.createClass({
+var InboxItem = React.createClass({
   render: function(){
     return (
       <tr>
@@ -48,4 +52,4 @@ var ConversationSummary = React.createClass({
   }
 });
 
-ReactDOM.render(<App/>, document.querySelector('#main'));
+ReactDOM.render(<App/>, document.getElementById('main'));
