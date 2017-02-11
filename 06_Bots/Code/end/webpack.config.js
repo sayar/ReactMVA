@@ -3,10 +3,7 @@ var webpack = require('webpack');
 
 module.exports = {
   context: path.join(__dirname, 'app'),
-  entry: {
-    javascript: './app.js',
-    html: './index.html'
-  },
+  entry: ['./index.html', './app.js'],
   output: { 
     path: path.join(__dirname, 'dist'),
     filename: 'bundle.js'
@@ -23,7 +20,7 @@ module.exports = {
       },
       {
         test: /\.html$/,
-        loader: "file?name=[name].[ext]",
+        loader: "file-loader?name=[name].[ext]",
       },
       {
         test: /\.css$/, 
